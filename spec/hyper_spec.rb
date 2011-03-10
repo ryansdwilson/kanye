@@ -1,7 +1,10 @@
 require 'spec_helper'
 
-describe "Hyper" do
-  it "fails" do
-    should.flunk "hey buddy, you should probably rename this file and start specing for real"
+describe HypeR do
+  describe "#collect_tracks" do
+    it "should" do
+      HypeR.new('samvincent').tracks.first.download
+      1.should == 1
+    end
   end
 end

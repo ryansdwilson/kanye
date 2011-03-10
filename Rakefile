@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "hyper"
   gem.homepage = "http://github.com/samvincent/hyper"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Ruby HypeMachine utility}
+  gem.description = %Q{Ruby HypeMachine utility}
   gem.email = "sam.vincent@mac.com"
   gem.authors = ["Sam Vincent"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
@@ -33,21 +33,4 @@ Rake::TestTask.new(:spec) do |spec|
   spec.verbose = true
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |spec|
-  spec.libs << 'spec'
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.verbose = true
-end
-
 task :default => :spec
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "hyper #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
