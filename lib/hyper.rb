@@ -12,6 +12,15 @@ class HypeR
     parse_response
   end
   
+  def download_all!
+    while tracks.size > 0
+      current_track = tracks.pop
+      puts "Attempting to download ", current_track
+      puts "\tDownloading song..."
+      current_track.download!
+    end
+  end
+  
   protected
   
   def parse_response
@@ -51,7 +60,7 @@ class Track
     'http://hypem.com/serve/play/'+ id + '/' + key + ".mp3"
   end
   
-  def download
+  def download!
     response = HTTParty.get(url, :headers => {'cookie' => cookie})
     puts "Attempting to download..."
     print self
