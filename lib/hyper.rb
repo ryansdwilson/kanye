@@ -15,9 +15,11 @@ class HypeR
   def download_all!
     while tracks.size > 0
       current_track = tracks.pop
-      puts "Attempting to download ", current_track
-      puts "\tDownloading song..."
-      current_track.download!
+      unless History.exists?(current_track)
+        current_track.download! 
+        History.insert(current_track)
+        puts "\tInserted song into db"
+      end
     end
   end
   
@@ -62,14 +64,31 @@ class Track
   
   def download!
     response = HTTParty.get(url, :headers => {'cookie' => cookie})
-    puts "Attempting to download..."
-    print self
+    puts "Attempting to download ", self
+    puts "\tDownloading song..."
     File.open("/Users/samvincent/Desktop/"+title+".mp3", "wb") do |f|
       f.write(response.parsed_response)
     end
   end
-  
+    
   def to_s
     "("+key+", "+title+", "+artist+")"
+  end
+end
+
+class History
+  class << self
+    def db
+      db = SQLite3::Database.new( "/Users/samvincent/Desktop/hyper_history.db" )
+      # db.execute("CREATE TABLE tracks (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT);")
+    end
+    
+    def insert(track)
+      db.execute("insert into tracks values (?, ?)", [nil, track.id])
+    end
+    
+    def exists?(track)
+      db.execute("select * from tracks where key=?", track.id).any?
+    end
   end
 end
