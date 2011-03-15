@@ -1,13 +1,20 @@
 require 'httparty'
+require 'hyper/track'
+require 'hyper/history'
 
 class HypeR
   attr_reader :html, :response, :tracks
   
-  def initialize(path)
-    @response = HTTParty.get("http://hypem.com/"+path+"/1?ax=1&ts="+timestamp)
+  DEFAULT_DOWNLOAD_PATH = "~/Music/HypeR/"
+  DEFAULT_DB_PATH = "~/Music/HypeR/history.db"
+  
+  def initialize(path, options={})
+    @response = HTTParty.get url(path)
     @tracks   = []
     @cookie   = @response.headers['set-cookie']
     @html     = @response.parsed_response
+    @@download_path = options[:download]
+    @@db_path       = options[:db]
     
     parse_response
   end
@@ -23,6 +30,18 @@ class HypeR
     end
   end
   
+  def url(path, pages=1)
+    "http://hypem.com/"+path+"/"+pages+"?ax=1&ts="+timestamp
+  end
+  
+  def self.download_path
+    @@download_path ||= DEFAULT_DOWNLOAD_PATH
+  end
+  
+  def self.db_path
+    @@db_path ||= DEFAULT_DB_PATH
+  end
+  
   protected
   
   def parse_response
@@ -33,62 +52,15 @@ class HypeR
     [ids, keys, songs, artists].each(&:flatten!)
     
     ids.each_with_index do |id, i|
-      @tracks << Track.new(:id => ids[i], 
+      @tracks << Track.new(:id  => ids[i], 
                            :key => keys[i], 
-                           :title => songs[i],
+                           :title  => songs[i],
                            :artist => artists[i], 
                            :cookie => @cookie)
     end
   end
   
-  # seconds from epoch - UNIX
   def timestamp
     ("%10.10f" % Time.now.utc.to_f).gsub('.','')
-  end
-end
-
-class Track
-  def initialize(params={})
-    @id     = params[:id]
-    @key    = params[:key]
-    @title  = params[:title]
-    @artist = params[:artist]
-    @cookie = params[:cookie]
-  end
-  
-  attr_reader :id, :key, :title, :artist, :cookie
-  
-  def url
-    'http://hypem.com/serve/play/'+ id + '/' + key + ".mp3"
-  end
-  
-  def download!
-    response = HTTParty.get(url, :headers => {'cookie' => cookie})
-    puts "Attempting to download ", self
-    puts "\tDownloading song..."
-    File.open("/Users/samvincent/Desktop/"+title+".mp3", "wb") do |f|
-      f.write(response.parsed_response)
-    end
-  end
-    
-  def to_s
-    "("+key+", "+title+", "+artist+")"
-  end
-end
-
-class History
-  class << self
-    def db
-      db = SQLite3::Database.new( "/Users/samvincent/Desktop/hyper_history.db" )
-      # db.execute("CREATE TABLE tracks (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT);")
-    end
-    
-    def insert(track)
-      db.execute("insert into tracks values (?, ?)", [nil, track.id])
-    end
-    
-    def exists?(track)
-      db.execute("select * from tracks where key=?", track.id).any?
-    end
   end
 end
