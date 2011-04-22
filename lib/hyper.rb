@@ -1,4 +1,5 @@
 require 'httparty'
+require 'nokogiri'
 require 'hyper/track'
 require 'hyper/history'
 
@@ -30,8 +31,8 @@ class HypeR
     end
   end
   
-  def url(path, pages=1)
-    "http://hypem.com/"+path+"/"+pages+"?ax=1&ts="+timestamp
+  def url(path, page=1)
+    "http://hypem.com/"+path+"/"+page.to_s+"?ax=1&ts="+timestamp
   end
   
   def self.download_path
@@ -45,10 +46,11 @@ class HypeR
   protected
   
   def parse_response
+    html_doc = Nokogiri::HTML(@html)
     ids     = @html.scan /\tid:\'(\w*)\'/
     keys    = @html.scan /\tkey:\s+?\'([\d\w]*)\'/
-    songs   = @html.scan /\tsong:\'(.*)\'/
-    artists = @html.scan /\tartist:\'(.*)\'/
+    artists = html_doc.css('.track_name .artist').map          {|node| node.content.strip }
+    songs   = html_doc.css('.track_name a:nth-of-type(2)').map {|node| node.content.strip }
     [ids, keys, songs, artists].each(&:flatten!)
     
     ids.each_with_index do |id, i|
