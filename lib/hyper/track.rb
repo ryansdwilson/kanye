@@ -32,7 +32,7 @@ class Track
   
   def filename
     name = [artist,title].join('-').gsub(" ","-").downcase
-    HypeR.download_path+name+".mp3"
+    File.join(HypeR.download_path, name+".mp3")
   end
   
   def set_id3_tags!

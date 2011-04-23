@@ -1,6 +1,8 @@
 require 'httparty'
 require 'nokogiri'
 require 'mp3info'
+require 'sqlite3'
+
 require 'hyper/track'
 require 'hyper/history'
 
@@ -8,25 +10,23 @@ class HypeR
   attr_reader :html, :response, :tracks
   
   DEFAULT_DOWNLOAD_PATH = File.expand_path("~/Music/HypeR/")
-  DEFAULT_DB_PATH = File.expand_path("~/Music/HypeR/history.db")
+  DEFAULT_DB_PATH = File.expand_path("~/Music/HypeR/.history.db")
   
-  def initialize(path, options={})
-    @response = HTTParty.get url(path)
+  def initialize(path, page=1)
+    @response = HTTParty.get url(path, page)
     @tracks   = []
     @cookie   = @response.headers['set-cookie']
-    @html     = @response.parsed_response
-    @@download_path = options[:download]
-    @@db_path       = options[:db]
-    
+    @html     = @response.parsed_response    
     parse_response
   end
   
   def download_all!
     while tracks.size > 0
       current_track = tracks.pop
-      unless History.exists?(current_track)
+      history = History.new(DEFAULT_DB_PATH)
+      unless history.exists?(current_track)
         current_track.download! 
-        History.insert(current_track)
+        history.insert(current_track)
         puts "\tInserted song into db"
       end
     end

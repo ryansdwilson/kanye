@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
+require 'rubygems'
+require 'hyper'
+
+unless File.directory?(File.expand_path("~/Music/HypeR/"))
+  Dir::mkdir(File.expand_path("~/Music/HypeR/"))
+  puts "Created directory => #{File.expand_path("~/Music/HypeR/")}"
+end
+
+unless File.exists?(HypeR::DEFAULT_DB_PATH)
+  db = SQLite3::Database.new(HypeR::DEFAULT_DB_PATH)
+  db.execute("CREATE TABLE tracks (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT);")
+  puts "Created database => #{HypeR::DEFAULT_DB_PATH}"
+end
+
+5.times do |i|
+  user = ARGV[0]
+  page = i+1
+  hyper = HypeR.new(user, page)
+  hyper.download_all!
+end
