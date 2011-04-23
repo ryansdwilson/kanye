@@ -2,6 +2,7 @@ source "http://rubygems.org"
 gem 'httparty', ">= 0.7.4"
 gem 'character-encodings'
 gem 'nokogiri'
+gem 'ruby-mp3info'
 
 group :development do
   gem "rspec", ">= 2"

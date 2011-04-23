@@ -1,13 +1,14 @@
 require 'httparty'
 require 'nokogiri'
+require 'mp3info'
 require 'hyper/track'
 require 'hyper/history'
 
 class HypeR
   attr_reader :html, :response, :tracks
   
-  DEFAULT_DOWNLOAD_PATH = "~/Music/HypeR/"
-  DEFAULT_DB_PATH = "~/Music/HypeR/history.db"
+  DEFAULT_DOWNLOAD_PATH = File.expand_path("~/Music/HypeR/")
+  DEFAULT_DB_PATH = File.expand_path("~/Music/HypeR/history.db")
   
   def initialize(path, options={})
     @response = HTTParty.get url(path)
@@ -50,13 +51,13 @@ class HypeR
     ids     = @html.scan /\tid:\'(\w*)\'/
     keys    = @html.scan /\tkey:\s+?\'([\d\w]*)\'/
     artists = html_doc.css('.track_name .artist').map          {|node| node.content.strip }
-    songs   = html_doc.css('.track_name a:nth-of-type(2)').map {|node| node.content.strip }
-    [ids, keys, songs, artists].each(&:flatten!)
+    titles   = html_doc.css('.track_name a:nth-of-type(2)').map {|node| node.content.strip }
+    [ids, keys, titles, artists].each(&:flatten!)
     
     ids.each_with_index do |id, i|
       @tracks << Track.new(:id  => ids[i], 
                            :key => keys[i], 
-                           :title  => songs[i],
+                           :title  => titles[i],
                            :artist => artists[i], 
                            :cookie => @cookie)
     end

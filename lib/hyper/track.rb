@@ -19,12 +19,26 @@ class Track
     print "Attempting to download ", self
     puts "\n\tDownloading song..."
     
-    File.open(HypeR.download_path+title+".mp3", "wb") do |f|
+    File.open(filename, "wb") do |f|
       f.write(response.parsed_response)
     end
+    
+    set_id3_tags!
   end
     
   def to_s
     "("+key+", "+title+", "+artist+")"
+  end
+  
+  def filename
+    name = [artist,title].join('-').gsub(" ","-").downcase
+    HypeR.download_path+name+".mp3"
+  end
+  
+  def set_id3_tags!
+    Mp3Info.open(filename, :encoding => 'utf-8') do |mp3|
+      mp3.tag.artist = artist
+      mp3.tag.title  = title
+    end
   end
 end
