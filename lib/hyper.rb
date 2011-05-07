@@ -48,10 +48,10 @@ class HypeR
   
   def parse_response
     html_doc = Nokogiri::HTML(@html)
-    ids     = @html.scan /\tid:\'(\w*)\'/
-    keys    = @html.scan /\tkey:\s+?\'([\d\w]*)\'/
-    artists = html_doc.css('.track_name .artist').map          {|node| node.content.strip }
-    titles   = html_doc.css('.track_name a:nth-of-type(2)').map {|node| node.content.strip }
+    ids      = @html.scan /\tid:\'(\w*)\'/
+    keys     = @html.scan /\tkey:\s+?\'([\d\w]*)\'/
+    artists  = html_doc.css('.track_name .artist').map     { |node| node.content.strip }
+    titles   = html_doc.css('.track_name .artist + a').map { |node| node.content.strip }
     [ids, keys, titles, artists].each(&:flatten!)
     
     ids.each_with_index do |id, i|

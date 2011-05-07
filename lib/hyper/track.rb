@@ -1,3 +1,5 @@
+class NoKeyError < StandardError; end
+
 class Track
   def initialize(params={})
     @id     = params[:id]
@@ -14,6 +16,7 @@ class Track
   end
   
   def download!
+    raise(NoKeyError, "Couldn't find :key for '#{self}'") if key.blank?
     response = HTTParty.get(url, :headers => {'cookie' => cookie})
     
     print "Attempting to download ", self
@@ -27,12 +30,12 @@ class Track
   end
     
   def to_s
-    "("+key+", "+title+", "+artist+")"
+    [title, artist].join(", ")
   end
   
   def filename
-    name = [artist,title].join('-').gsub(" ","-").downcase
-    File.join(HypeR.download_path, name+".mp3")
+    name = [artist,title].join('-').gsub(/[ \/]/, "-").downcase
+    File.join(HypeR.download_path, name + ".mp3")
   end
   
   def set_id3_tags!
