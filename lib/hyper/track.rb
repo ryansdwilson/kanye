@@ -30,7 +30,7 @@ class Track
   end
     
   def to_s
-    [title, artist].join(", ")
+    "(" + [key, title, artist].join(", ") +  ")"
   end
   
   def filename

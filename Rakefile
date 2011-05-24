@@ -15,13 +15,17 @@ Jeweler::Tasks.new do |gem|
   gem.name = "hyper"
   gem.homepage = "http://github.com/samvincent/hyper"
   gem.license = "MIT"
-  gem.summary = %Q{Ruby HypeMachine utility}
-  gem.description = %Q{Ruby HypeMachine utility}
+  gem.summary = %Q{Ruby HypeM utility}
+  gem.description = %Q{Ruby HypeM utility}
   gem.email = "sam.vincent@mac.com"
   gem.authors = ["Sam Vincent"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
   gem.add_runtime_dependency 'httparty', '>= 0.7.4'
+  gem.add_runtime_dependency 'sqlite3'
+  gem.add_runtime_dependency 'character-encodings'
+  gem.add_runtime_dependency 'nokogiri', '> 1.4.0'
+  gem.add_runtime_dependency 'ruby-mp3info', '> 0.6.0'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
 end
 Jeweler::RubygemsDotOrgTasks.new
