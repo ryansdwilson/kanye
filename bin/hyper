@@ -4,19 +4,39 @@ $:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
 require 'rubygems'
 require 'hyper'
 
-unless File.directory?(File.expand_path("~/Music/HypeR/"))
-  Dir::mkdir(File.expand_path("~/Music/HypeR/"))
-  puts "Created directory => #{File.expand_path("~/Music/HypeR/")}"
+def load_configuration(path)
+  YAML.load File.read(path)
 end
 
-unless File.exists?(HypeR::DEFAULT_DB_PATH)
-  db = SQLite3::Database.new(HypeR::DEFAULT_DB_PATH)
+# Setup
+if File.exist?(HypeR::DEFAULT_CONFIGURATION_PATH)
+  config = load_configuration(HypeR::DEFAULT_CONFIGURATION_PATH)
+else
+  puts "It appears HypeR hasn't been configured yet."
+  puts "What is your hype user name?"
+  name = gets.chomp
+  File.open(HypeR::DEFAULT_CONFIGURATION_PATH, "w") do |f|
+    f.write "username: #{name}\n"
+    f.write "pages: 5\n"
+    f.write "path: #{HypeR::DEFAULT_DOWNLOAD_PATH}\n"
+    f.write "db: #{HypeR::DEFAULT_DB_PATH}\n"
+  end
+  config = load_configuration(HypeR::DEFAULT_CONFIGURATION_PATH)
+end
+
+unless File.directory? config["path"]
+  Dir::mkdir config["path"]
+  puts "Created directory => #{config["path"]}"
+end
+
+unless File.exists? config["db"]
+  db = SQLite3::Database.new(config["db"])
   db.execute("CREATE TABLE tracks (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT);")
-  puts "Created database => #{HypeR::DEFAULT_DB_PATH}"
+  puts "Created database => #{config["db"]}"
 end
 
-5.times do |i|
-  user = ARGV[0]
+config["pages"].to_i.times do |i|
+  user = config["username"]
   page = i+1
   hyper = HypeR.new(user, page)
   hyper.download_all!

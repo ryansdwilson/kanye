@@ -9,6 +9,7 @@ require 'hyper/history'
 class HypeR
   attr_reader :html, :response, :tracks
   
+  DEFAULT_CONFIGURATION_PATH = File.expand_path("~/.hyper_rc")
   DEFAULT_DOWNLOAD_PATH = File.expand_path("~/Music/HypeR/")
   DEFAULT_DB_PATH = File.expand_path("~/Music/HypeR/.history.db")
   
