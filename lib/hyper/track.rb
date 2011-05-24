@@ -38,10 +38,16 @@ class Track
     File.join(HypeR.download_path, name + ".mp3")
   end
   
+  private
+  
   def set_id3_tags!
-    Mp3Info.open(filename, :encoding => 'utf-8') do |mp3|
-      mp3.tag.artist = artist
-      mp3.tag.title  = title
+    begin
+      Mp3Info.open(filename, :encoding => 'utf-8') do |mp3|
+        mp3.tag.artist = artist
+        mp3.tag.title  = title
+      end
+    rescue Mp3InfoError => e
+      print e.message
     end
   end
 end
