@@ -2,26 +2,26 @@
 
 $:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
 require 'rubygems'
-require 'hyper'
+require 'kanye'
 
 def load_configuration(path)
   YAML.load File.read(path)
 end
 
 # Setup
-if File.exist?(HypeR::DEFAULT_CONFIGURATION_PATH)
-  config = load_configuration(HypeR::DEFAULT_CONFIGURATION_PATH)
+if File.exist?(Kanye::DEFAULT_CONFIGURATION_PATH)
+  config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 else
-  puts "It appears HypeR hasn't been configured yet."
+  puts "It appears Kanye hasn't been configured yet."
   puts "What is your hype user name?"
   name = gets.chomp
-  File.open(HypeR::DEFAULT_CONFIGURATION_PATH, "w") do |f|
+  File.open(Kanye::DEFAULT_CONFIGURATION_PATH, "w") do |f|
     f.write "username: #{name}\n"
     f.write "pages: 5\n"
-    f.write "path: #{HypeR::DEFAULT_DOWNLOAD_PATH}\n"
-    f.write "db: #{HypeR::DEFAULT_DB_PATH}\n"
+    f.write "path: #{Kanye::DEFAULT_DOWNLOAD_PATH}\n"
+    f.write "db: #{Kanye::DEFAULT_DB_PATH}\n"
   end
-  config = load_configuration(HypeR::DEFAULT_CONFIGURATION_PATH)
+  config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 end
 
 unless File.directory? config["path"]
@@ -38,6 +38,6 @@ end
 config["pages"].to_i.times do |i|
   user = config["username"]
   page = i+1
-  hyper = HypeR.new(user, page)
-  hyper.download_all!
+  kanye = Kanye.new(user, page)
+  kanye.download_all!
 end

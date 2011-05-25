@@ -35,7 +35,7 @@ class Track
   
   def filename
     name = [artist,title].join('-').gsub(/[ \/]/, "-").downcase
-    File.join(HypeR.download_path, name + ".mp3")
+    File.join(Kanye.download_path, name + ".mp3")
   end
   
   private

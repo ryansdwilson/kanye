@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HypeR do
+describe Kanye do
   describe '#parse_response' do
     let(:html) { File.open('spec/data/sample.html', 'r').read }
     
@@ -12,7 +12,7 @@ describe HypeR do
       HTTParty.stub!(:get).and_return(resp)
     end
     
-    let(:hyper) { HypeR.new('test') }
+    let(:kanye) { Kanye.new('test') }
     
     describe 'format strings' do
       results = [
@@ -39,7 +39,7 @@ describe HypeR do
       ]
       results.each_with_index do |track, index|
         describe "track No. #{index+1}" do
-          subject { hyper.tracks[index] }
+          subject { kanye.tracks[index] }
           its(:artist) { should == results[index][0] }
           its(:title)  { should == results[index][1] }
           its(:id)     { should == results[index][2] }

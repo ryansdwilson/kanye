@@ -3,15 +3,15 @@ require 'nokogiri'
 require 'mp3info'
 require 'sqlite3'
 
-require 'hyper/track'
-require 'hyper/history'
+require 'kanye/track'
+require 'kanye/history'
 
-class HypeR
+class Kanye
   attr_reader :html, :response, :tracks
   
-  DEFAULT_CONFIGURATION_PATH = File.expand_path("~/.hyper_rc")
-  DEFAULT_DOWNLOAD_PATH = File.expand_path("~/Music/HypeR/")
-  DEFAULT_DB_PATH = File.expand_path("~/Music/HypeR/.history.db")
+  DEFAULT_CONFIGURATION_PATH = File.expand_path("~/.kanye_rc")
+  DEFAULT_DOWNLOAD_PATH = File.expand_path("~/Music/Kanye/")
+  DEFAULT_DB_PATH = File.expand_path("~/Music/Kanye/.history.db")
   
   def initialize(path, page=1)
     @response = HTTParty.get url(path, page)
