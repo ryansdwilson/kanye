@@ -4,6 +4,49 @@ $:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
 require 'rubygems'
 require 'kanye'
 
+KANYE_GLASSES = <<-GLASSES
+
+                                                                ..:ccCCO888@@@@@@@@@@@@@@@@@@@@@@88Coc:                                               
+             :C8@@@@@@@@@@@@@@@@@@@@8Oc:.    .coO8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@O:                                    
+        .o@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@o                                
+      .:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:                             
+      Oc:.o.....                     @@@@@@@@@@@@@@@@@ :                                                           .@@@@@@@                           
+     o  .c                           .@@@@@@@@@@@@@@C                                                                .8@@@@@@                         
+     :  .::::.........................@@@@@@@@@@@@@@.:::......:::ccc::::::cccooooccc:c::c:ccc::.......::....           c@@@@@@c                       
+   .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@88O@@                      
+    :   :                             @@@@@@@@@@@@@@.:..:::::::ccocooooCCOOO8O8888@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@c                    
+    :   .                             @@@@@@@@@@@@@@ c                                                                       @@@@@8                   
+  oOOOCCCCooooooccccccccccccccccccccco@@@@@@@@@@@@@@:.ccc:....:.. ....                                                       :@@@@@@                  
+   .::::cccooooCOO88888@@@@@@@@@@@@@@@@@@@@@O8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@88OOOCCooccccc:....:... ..::...O@@@@@@@c       :oCC.   
+        :cccccccocc:::.              @@@@o     .@@@@@CocooCCO8888@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@COoCCoCCc   
+   :cc:.      ..:.:c:cc.:. .        :@@@8CO      8@@@8c:                                      ..:::ccooCCO8888@@@@@@@@@@@@@@@@@@@@@@@@@@@@OoCCCCOo.   
+    .coC88@@@@@@@@@@@@@@@@@@@888OCoc8@@@ COc      @@@@ :cc:....                                                                C@@@@@@@@@@OoCoCCo.    
+     .  ..              .:ccCOO88@@@@@@OOCOo      8@@@@@@@@@@@@@@@@@@@888OCoccc:.......:..::....                               C@@@@@@@@@@OooCo       
+     :   co::.                     @@@@ OCOo       @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@888OCooc::.......::.:c..8@@@@@@@@@8Oo:         
+      :C@@@@@8oc:.       ....cc:c:.@@@.OCOO         @@@@ cccc                    ..:ccoOOO8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@:            
+      .       .:oO8@@@@@@@@@@@@8OCO@@8COOO.         o@@@8 cc:.                                                 ..:cccoOO88@@@@@@@@@@@@.               
+      .   :..                  .:c@@@ OOO            o@@@@@@@@@@@@8OCoc:::.::.c::c...                                         .@@@@@O .               
+       :C8@@8c.    ..:::.        O@@COOC              O@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8OCoc::::.:::c:::...           O@@@@@                  
+        :  : :C8@@@@@8oc:       o@@8.C                 @@@@@ cc       ..:ccCO88@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8OOCcc:cO8@@c                  
+        .    .        .cO8@@@@@@@@@ 8                   8@@@@ c                                ..ccoOO88@@@@@@@@@@@@@@@@@@@@@@@@@@@                   
+        :@@@@@o.    ..         @@@                       O@@@@c:..  .:::cccoc::...                                           8OO8@                    
+         .@@@ o8@@@@Oo.     .C@@@.                        O@@@@@@@@@@@@@@@@@@@@@@@8OOocc:.   ...::cc.:...                   O@@@@.                    
+           @@@@: :. co@@@@@@@@@8                           .@@@@ :.coO88@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8OOcc:.. .. ...:8@@@@O                     
+            .@@@@8c   8@@@@@@@c                              @@@@C c                .::coO88@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      
+                o@@@@@@@@@@O                                   @@@@c   ..::::..                                ::coCO88@@@@@@@@.                      
+                                                                c@@@@@@@@@@@@@@@@8OCcc:.   ...::::.:.                   o@@@@@:                       
+                                                                  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8OOocc:.....::o@@@@@@O                        
+                                                                     .@@@@@@@@@@8::.  ::cCO88@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@c                         
+                                                                        .8@@@@@@@@@@@Oo::.:c:.            c@@@@@@@@@@@@@@@C                           
+                                                                            :C@@@@@@@@@@@@@@@@@@@@88OOCoO@@@@@@@@@@@@@@@.                             
+                                                                                   .o8@@@@@@@@@@@@@@@@@@@@@@@@@@@@8o                                  
+                                                                                                ..:::ccc::.                                           
+                                                                                                                                                      
+                                                                                                                                                      
+GLASSES
+
+puts KANYE_GLASSES
+
 def load_configuration(path)
   YAML.load File.read(path)
 end
@@ -12,8 +55,8 @@ end
 if File.exist?(Kanye::DEFAULT_CONFIGURATION_PATH)
   config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 else
-  puts "It appears Kanye hasn't been configured yet."
-  puts "What is your hype user name?"
+  puts "It appears Kanye doesn't know who you are yet."
+  print "What is your hype name?"
   name = gets.chomp
   File.open(Kanye::DEFAULT_CONFIGURATION_PATH, "w") do |f|
     f.write "username: #{name}\n"
@@ -24,20 +67,22 @@ else
   config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 end
 
+# Create the download directory if it doesn't exist yet
 unless File.directory? config["path"]
   Dir::mkdir config["path"]
   puts "Created directory => #{config["path"]}"
 end
 
+# Create the Database if it doesn't exist yet
 unless File.exists? config["db"]
   db = SQLite3::Database.new(config["db"])
   db.execute("CREATE TABLE tracks (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT);")
   puts "Created database => #{config["db"]}"
 end
 
-config["pages"].to_i.times do |i|
+# Grab as many pages as configured
+(1..(config["pages"])).each do |page|
   user = config["username"]
-  page = i+1
   kanye = Kanye.new(user, page)
   kanye.download_all!
 end
