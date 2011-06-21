@@ -56,7 +56,7 @@ if File.exist?(Kanye::DEFAULT_CONFIGURATION_PATH)
   config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 else
   puts "It appears Kanye doesn't know who you are yet."
-  print "What is your hype name?"
+  print "What is your h-y-p-e name?"
   name = gets.chomp
   File.open(Kanye::DEFAULT_CONFIGURATION_PATH, "w") do |f|
     f.write "username: #{name}\n"

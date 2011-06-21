@@ -7,7 +7,7 @@ describe Kanye::Track do
   
   describe "url" do
     it "should contain contain :id and :key" do
-      @track.url.should == "http://hypem.com/serve/source/id/key"
+      @track.url.should == "http://#{Kanye::BASE_URL}/serve/source/id/key"
     end
   end
   
@@ -24,7 +24,7 @@ describe Kanye::Track do
       Mp3Info.stub!(:open)
     end
     
-    it "should request mp3 from hypem with cookie" do
+    it "should request mp3 with cookie" do
       HTTParty.should_receive(:get).with(@track.url, {:headers => {"cookie" => @track.cookie}})
       @track.download!
     end

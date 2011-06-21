@@ -11,6 +11,7 @@ module Kanye
   DEFAULT_CONFIGURATION_PATH = File.expand_path("~/.kanye_rc")
   DEFAULT_DOWNLOAD_PATH = File.expand_path("~/Music/Kanye/")
   DEFAULT_DB_PATH = File.expand_path("~/Music/Kanye/.history.db")
+  BASE_URL = 'h' + 'y' + 'p' + 'e' + 'm' + '.com'
 
   class << self
     def download_path

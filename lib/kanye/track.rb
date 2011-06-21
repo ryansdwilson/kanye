@@ -13,7 +13,7 @@ module Kanye
     attr_reader :id, :key, :title, :artist, :cookie
   
     def url
-      'http://hypem.com/serve/source/'+ id + '/' + key
+      "http://#{BASE_URL}/serve/source/" + id + '/' + key
     end
   
     def download!

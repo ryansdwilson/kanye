@@ -29,7 +29,7 @@ module Kanye
     end
 
     def url(path, page=1)
-      "http://hypem.com/"+path+"/"+page.to_s+"?ax=1&ts="+timestamp
+      "http://#{BASE_URL}/"+path+"/"+page.to_s+"?ax=1&ts="+timestamp
     end
 
     protected
