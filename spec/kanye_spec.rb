@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Kanye do
+describe Kanye::Page do
   describe '#parse_response' do
     let(:html) { File.open('spec/data/sample.html', 'r').read }
     
@@ -12,7 +12,7 @@ describe Kanye do
       HTTParty.stub!(:get).and_return(resp)
     end
     
-    let(:kanye) { Kanye.new('test') }
+    let(:kanye) { Kanye::Page.new('test') }
     
     describe 'format strings' do
       results = [
@@ -37,7 +37,7 @@ describe Kanye do
         ["Danger Granger","Daniel is a Wild Cat (Porter Robinson vs Bat For Lashes)","1asad","65257400b1a1266adb3173f029bbb1a8","yesplease"],
         ["DEFEP","Rolling it Right (Afrojack vs Adele)","1asae","63cbcb3a740e1ad0cb7163b23e33a9d6","yesplease"]
       ]
-      results.each_with_index do |track, index|
+      results.reverse!.each_with_index do |track, index|
         describe "track No. #{index+1}" do
           subject { kanye.tracks[index] }
           its(:artist) { should == results[index][0] }

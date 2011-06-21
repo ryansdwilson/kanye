@@ -83,6 +83,6 @@ end
 # Grab as many pages as configured
 (1..(config["pages"])).each do |page|
   user = config["username"]
-  kanye = Kanye.new(user, page)
+  kanye = Kanye::Page.new(user, page)
   kanye.download_all!
 end
