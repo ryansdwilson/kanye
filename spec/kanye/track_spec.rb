@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Track do
+describe Kanye::Track do
   before do
-    @track = Track.new(:id => 'id', :key => 'key', :artist => 'Alan Braxe', :title => 'Rubicon', :cookie => 'cookie')
+    @track = Kanye::Track.new(:id => 'id', :key => 'key', :artist => 'Alan Braxe', :title => 'Rubicon', :cookie => 'cookie')
   end
   
   describe "url" do
     it "should contain contain :id and :key" do
-      @track.url.should == "http://hypem.com/serve/play/id/key.mp3"
+      @track.url.should == "http://#{Kanye::BASE_URL}/serve/source/id/key"
     end
   end
   
@@ -19,12 +19,12 @@ describe Track do
   
   describe "download!" do
     before do
-      HTTParty.stub!(:get)
+      HTTParty.stub!(:get) { mock(:response, :parsed_response => {}, :code => 200) }
       File.stub!(:open)
       Mp3Info.stub!(:open)
     end
     
-    it "should request mp3 from hypem with cookie" do
+    it "should request mp3 with cookie" do
       HTTParty.should_receive(:get).with(@track.url, {:headers => {"cookie" => @track.cookie}})
       @track.download!
     end

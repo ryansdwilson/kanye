@@ -1,18 +1,18 @@
-= HypeR
+= Kanye
 
 A utility that helps you download all of your favorite tracks from your favorite music blog aggregator.
 
 == Installation
 
-  gem install hyper
+  gem install kanye
   
 You'll need to have XCode installed because *Nokogiri* is a dependency.
-The first time you run +hyper+, it will ask you for your user name.
+The first time you run +kanye+, it will ask you for your user name.
 
-  $ hyper
-  It appears HypeR hasn't been configured yet.
+  $ kanye
+  It appears Kanye hasn't been configured yet.
   What is your hype user name?
 
-This will output to +~/.hyper_rc+ some YAML options. Your downloads will now begin.
+This will output to +~/.kanye_rc+ some YAML options. Your downloads will now begin.
 
-Now that you've configured it, just run +hyper+ any time to go over your latest favorites.
+Now that you've configured it, just run +kanye+ any time to go over your latest favorites.
