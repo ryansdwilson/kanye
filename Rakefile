@@ -15,7 +15,7 @@ Jeweler::Tasks.new do |gem|
   gem.name = "kanye"
   gem.homepage = "http://github.com/samvincent/kanye"
   gem.license = "MIT"
-  gem.summary = %Q{Ruby HypeM utility}
+  gem.summary = %Q{Ruby H-Y-P-E utility}
   gem.description = %Q{Lyrical genius, voice of a generation.}
   gem.email = "sam.vincent@mac.com"
   gem.authors = ["Sam Vincent"]
@@ -25,6 +25,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_runtime_dependency 'sqlite3'
   gem.add_runtime_dependency 'nokogiri', '> 1.4.0'
   gem.add_runtime_dependency 'ruby-mp3info', '0.6.14'
+  gem.add_runtime_dependency 'rb-appscript', '0.6.1'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
 end
 Jeweler::RubygemsDotOrgTasks.new
