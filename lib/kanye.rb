@@ -18,6 +18,10 @@ module Kanye
       @@download_path ||= DEFAULT_DOWNLOAD_PATH
     end
 
+    def download_path=path
+      @@download_path = File.expand_path(path)
+    end
+
     def db_path
       @@db_path ||= DEFAULT_DB_PATH
     end

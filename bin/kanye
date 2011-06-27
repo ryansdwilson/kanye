@@ -72,6 +72,7 @@ unless File.directory? config["path"]
   Dir::mkdir config["path"]
   puts "Created directory => #{config["path"]}"
 end
+Kanye.download_path = config["path"]
 
 # Create the Database if it doesn't exist yet
 unless File.exists? config["db"]

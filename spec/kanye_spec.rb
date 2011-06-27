@@ -1,5 +1,21 @@
 require 'spec_helper'
 
+describe Kanye do
+  describe 'download_path' do
+    context 'when using default config' do
+      subject { Kanye }
+      its(:download_path) { should == File.expand_path('~/Music/Kanye/')}
+    end
+
+    context 'when using custom config' do
+      it 'should set new download path' do
+        Kanye.download_path = '~/Music/iTunes/Automatically add to iTunes'
+        Kanye.download_path.should == File.expand_path('~/Music/iTunes/Automatically add to iTunes')
+      end
+    end
+  end
+end
+
 describe Kanye::Page do
   describe '#parse_response' do
     let(:html) { File.open('spec/data/sample.html', 'r').read }
