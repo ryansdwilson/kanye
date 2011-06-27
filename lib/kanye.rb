@@ -25,5 +25,9 @@ module Kanye
     def db_path
       @@db_path ||= DEFAULT_DB_PATH
     end
+
+    def db_path=path
+      @@db_path = File.expand_path(path)
+    end
   end
 end

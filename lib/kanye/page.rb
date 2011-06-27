@@ -14,7 +14,7 @@ module Kanye
     def download_all!
       while tracks.size > 0
         current_track = tracks.pop
-        history = History.new(DEFAULT_DB_PATH)
+        history = History.new(db_path)
         unless history.exists?(current_track)
           begin
             current_track.download! 

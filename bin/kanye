@@ -67,15 +67,16 @@ else
   config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 end
 
+Kanye.download_path = config["path"]
 # Create the download directory if it doesn't exist yet
-unless File.directory? config["path"]
+unless File.directory? Kanye.download_path
   Dir::mkdir config["path"]
   puts "Created directory => #{config["path"]}"
 end
-Kanye.download_path = config["path"]
 
+Kanye.db_path = config["db"]
 # Create the Database if it doesn't exist yet
-unless File.exists? config["db"]
+unless File.exists? Kanye.db_path
   db = SQLite3::Database.new(config["db"])
   db.execute("CREATE TABLE tracks (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT);")
   puts "Created database => #{config["db"]}"
