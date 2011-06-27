@@ -12,6 +12,7 @@ module Kanye
   DEFAULT_DOWNLOAD_PATH = File.expand_path("~/Music/Kanye/")
   DEFAULT_DB_PATH = File.expand_path("~/Music/Kanye/.history.db")
   BASE_URL = 'h' + 'y' + 'p' + 'e' + 'm' + '.com'
+  DEFAULT_ID3_COMMENT = 'downloaded with kanye'
 
   class << self
     def download_path
@@ -28,6 +29,10 @@ module Kanye
 
     def db_path=path
       @@db_path = File.expand_path(path)
+    end
+
+    def id3_comment
+      @@comment ||= DEFAULT_ID3_COMMENT
     end
   end
 end

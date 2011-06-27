@@ -51,6 +51,7 @@ module Kanye
       Mp3Info.open(filename, :encoding => 'utf-8') do |mp3|
         mp3.tag.artist = artist
         mp3.tag.title  = title
+        mp3.tag2.COMM = Kanye.id3_comment
       end
     end
   end
