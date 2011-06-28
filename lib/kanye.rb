@@ -6,6 +6,7 @@ require 'sqlite3'
 require 'kanye/page'
 require 'kanye/track'
 require 'kanye/history'
+require 'kanye/itunes'
 
 module Kanye
   DEFAULT_CONFIGURATION_PATH = File.expand_path("~/.kanye_rc")

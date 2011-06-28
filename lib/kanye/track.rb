@@ -48,7 +48,7 @@ module Kanye
     private
   
     def set_id3_tags!
-      Mp3Info.open(filename, :encoding => 'utf-8') do |mp3|
+      Mp3Info.open(filename) do |mp3|
         mp3.tag.artist = artist
         mp3.tag.title  = title
       end

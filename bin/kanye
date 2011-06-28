@@ -4,6 +4,9 @@ $:.unshift(File.join(File.dirname(__FILE__), "/../lib"))
 require 'rubygems'
 require 'kanye'
 
+require 'shellwords'
+include Shellwords
+
 KANYE_GLASSES = <<-GLASSES
 
                                                                 ..:ccCCO888@@@@@@@@@@@@@@@@@@@@@@88Coc:                                               
@@ -81,8 +84,24 @@ unless File.exists? config["db"]
 end
 
 # Grab as many pages as configured
+pages = []
 (1..(config["pages"])).each do |page|
   user = config["username"]
-  kanye = Kanye::Page.new(user, page)
-  kanye.download_all!
+  page = Kanye::Page.new(user, page)
+  pages << page
+  
+  page.download_all!
+end
+
+if config["playlist"].to_s == "true"
+  itunes = Kanye::ITunes.new
+  pages.reverse.each do |page|
+    page.tracks.reverse.each do |track|
+      begin
+        itunes.add_to_playlist track.filename, Time.now.strftime("%B %Y")
+        `mv #{shellescape track.filename} ~/.Trash`
+      rescue MacTypes::FileNotFoundError
+      end
+    end
+  end
 end
