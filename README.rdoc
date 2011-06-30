@@ -13,6 +13,12 @@ The first time you run +kanye+, it will ask you for your user name.
   It appears Kanye hasn't been configured yet.
   What is your hype user name?
 
-This will output to +~/.kanye_rc+ some YAML options. Your downloads will now begin.
+This will output options to <tt>~/.kanye_rc</tt>. Your downloads will now begin.
 
 Now that you've configured it, just run +kanye+ any time to go over your latest favorites.
+
+== iTunes integration
+
+By adding the following to your <tt>~/.kanye_rc</tt> file, Kanye will add tracks to your iTunes library and add them to a playlist named for the current month and year (ie."June 2011")
+
+    playlist: true

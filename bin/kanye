@@ -66,6 +66,7 @@ else
     f.write "pages: 5\n"
     f.write "path: #{Kanye::DEFAULT_DOWNLOAD_PATH}\n"
     f.write "db: #{Kanye::DEFAULT_DB_PATH}\n"
+    f.write "playlist: false\n"
   end
   config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 end
