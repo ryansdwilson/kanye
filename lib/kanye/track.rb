@@ -1,3 +1,5 @@
+require 'uri'
+
 module Kanye
   class NoKeyError < StandardError; end
 
@@ -26,7 +28,7 @@ module Kanye
       print "Attempting to download ", self
       puts "\n\tDownloading song..."
     
-      mp3_url = response.parsed_response["url"]
+      mp3_url = URI.escape(response.parsed_response["url"])
       mp3_response = HTTParty.get(mp3_url)
     
       File.open(filename, "wb") do |f|
