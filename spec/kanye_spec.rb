@@ -6,6 +6,7 @@ describe Kanye do
       subject { Kanye }
       its(:download_path) { should == File.expand_path('~/Music/Kanye/')}
       its(:db_path)       { should == File.expand_path('~/Music/Kanye/.history.db')}
+      its(:id3_comment)   { should == 'downloaded with kanye' }
     end
 
     context 'when using custom config' do
