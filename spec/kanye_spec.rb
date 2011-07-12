@@ -4,16 +4,21 @@ describe Kanye do
   describe 'config' do
     context 'when using default config' do
       subject { Kanye }
-      its(:download_path) { should == File.expand_path('~/Music/Kanye/')}
-      its(:db_path)       { should == File.expand_path('~/Music/Kanye/.history.db')}
+      its(:download_path)     { should == File.expand_path('~/Music/Kanye/')}
+      its(:db_path)           { should == File.expand_path('~/Music/Kanye/.history.db')}
+      its(:playlist_template) { should == "{{month}} {{year}}"}
+      its(:playlist)          { should == Time.now.strftime("%B %Y") }
     end
 
     context 'when using custom config' do
-      it 'should set new download path' do
+      it 'should set new options' do
         Kanye.download_path = '~/Music/iTunes/Automatically add to iTunes'
         Kanye.db_path = '~/Music/Kanye/.kanye_history.db'
+        Kanye.playlist_template = "{{year}}"
         Kanye.download_path.should == File.expand_path('~/Music/iTunes/Automatically add to iTunes')
         Kanye.db_path.should == File.expand_path('~/Music/Kanye/.kanye_history.db')
+        Kanye.playlist_template.should == "{{year}}"
+        Kanye.playlist.should == Time.now.strftime("%Y")
       end
     end
   end

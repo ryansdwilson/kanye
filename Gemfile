@@ -4,6 +4,7 @@ gem 'sqlite3'
 gem 'nokogiri'
 gem 'ruby-mp3info', '0.6.14'
 gem 'rb-appscript', '0.6.1'
+gem 'mustache'
 
 group :development do
   gem "rspec", ">= 2"

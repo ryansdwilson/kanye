@@ -26,6 +26,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_runtime_dependency 'nokogiri', '> 1.4.0'
   gem.add_runtime_dependency 'ruby-mp3info', '0.6.14'
   gem.add_runtime_dependency 'rb-appscript', '0.6.1'
+  gem.add_runtime_dependency 'mustache', '>= 0.99.4'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
 end
 Jeweler::RubygemsDotOrgTasks.new

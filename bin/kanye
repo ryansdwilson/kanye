@@ -67,6 +67,7 @@ else
     f.write "path: #{Kanye::DEFAULT_DOWNLOAD_PATH}\n"
     f.write "db: #{Kanye::DEFAULT_DB_PATH}\n"
     f.write "playlist: false\n"
+    f.write "playlist_template: #{Kanye::DEFAULT_PLAYLIST_TEMPLATE}\n"
   end
   config = load_configuration(Kanye::DEFAULT_CONFIGURATION_PATH)
 end
@@ -86,6 +87,8 @@ unless File.exists? Kanye.db_path
   puts "Created database => #{config["db"]}"
 end
 
+Kanye.playlist_template=config["playlist_template"]
+
 # Grab as many pages as configured
 pages = []
 (1..(config["pages"])).each do |page|
@@ -100,7 +103,7 @@ if config["playlist"].to_s == "true"
   pages.reverse.each do |page|
     page.tracks.reverse.each do |track|
       begin
-        itunes.add_to_playlist track.filename, Time.now.strftime("%B %Y")
+        itunes.add_to_playlist track.filename, Kanye.playlist
         `mv #{shellescape track.filename} ~/.Trash`
       rescue MacTypes::FileNotFoundError
       end
