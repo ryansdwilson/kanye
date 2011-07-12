@@ -8,7 +8,7 @@ module Kanye
       list = playlist(playlist_name) || create_playlist(playlist_name)
       raise "Playlist could not be found or created" unless list
       track = itunes.add MacTypes::Alias.path(file)
-      track.duplicate(:to => list)
+      track.duplicate(:to => list) if track
     end
     
     def playlist(name)
