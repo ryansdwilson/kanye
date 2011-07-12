@@ -22,3 +22,12 @@ Now that you've configured it, just run +kanye+ any time to go over your latest 
 By adding the following to your <tt>~/.kanye_rc</tt> file, Kanye will add tracks to your iTunes library and add them to a playlist named for the current month and year (ie."June 2011")
 
     playlist: true
+
+To change the playlist naming edit the playlist_template line in your <tt>~/.kanye_rc</tt> file.  The following example will add your songs to a playlist titled kanye followed by the current year (ie. "kanye 2011")
+
+    playlist_template: kanye {{year}}
+
+Available Tags are
+
+    {{year}}
+    {{month}}
