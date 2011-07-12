@@ -32,10 +32,12 @@ Gem::Specification.new do |s|
     "lib/kanye/history.rb",
     "lib/kanye/itunes.rb",
     "lib/kanye/page.rb",
+    "lib/kanye/playlist.rb",
     "lib/kanye/track.rb",
     "spec/data/sample.html",
     "spec/data/super.mp3",
     "spec/kanye/itunes_spec.rb",
+    "spec/kanye/playlist_spec.rb",
     "spec/kanye/track_spec.rb",
     "spec/kanye_spec.rb",
     "spec/spec_helper.rb"
