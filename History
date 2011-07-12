@@ -1,0 +1,3 @@
+== 0.1.2 2011-06-06
+* major enhancements
+  * Added rb-appscript and iTunes class so tracks can be added to playlists

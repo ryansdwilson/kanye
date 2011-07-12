@@ -12,8 +12,7 @@ module Kanye
     end
 
     def download_all!
-      while tracks.size > 0
-        current_track = tracks.pop
+      tracks.each do |current_track|
         history = History.new(Kanye.db_path)
         unless history.exists?(current_track)
           begin
@@ -21,7 +20,6 @@ module Kanye
           rescue Mp3InfoError => e
             print e.message
           end
-            
           history.insert(current_track)
           puts "\tInserted song into db"
         end

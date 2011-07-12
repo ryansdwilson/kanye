@@ -1,3 +1,5 @@
+require 'uri'
+
 module Kanye
   class NoKeyError < StandardError; end
 
@@ -26,7 +28,7 @@ module Kanye
       print "Attempting to download ", self
       puts "\n\tDownloading song..."
     
-      mp3_url = response.parsed_response["url"]
+      mp3_url = URI.escape(response.parsed_response["url"])
       mp3_response = HTTParty.get(mp3_url)
     
       File.open(filename, "wb") do |f|
@@ -48,7 +50,7 @@ module Kanye
     private
   
     def set_id3_tags!
-      Mp3Info.open(filename, :encoding => 'utf-8') do |mp3|
+      Mp3Info.open(filename) do |mp3|
         mp3.tag.artist = artist
         mp3.tag.title  = title
       end

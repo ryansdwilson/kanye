@@ -19,13 +19,22 @@ describe Kanye::Track do
   
   describe "download!" do
     before do
-      HTTParty.stub!(:get) { mock(:response, :parsed_response => {}, :code => 200) }
+      HTTParty.stub!(:get) { mock(:response, :parsed_response => {'url' => ''}, :code => 200) }
       File.stub!(:open)
       Mp3Info.stub!(:open)
     end
     
-    it "should request mp3 with cookie" do
+    it "should request mp3 url with cookie" do
       HTTParty.should_receive(:get).with(@track.url, {:headers => {"cookie" => @track.cookie}})
+      @track.download!
+    end
+    
+    it "should url escape returned url in mp3 download call" do
+      unescaped_url = "http://offtheradarmusic.com/audio/Synthetiseur (Bestrack Nostalgia Remix).mp3"
+      escaped_url   = "http://offtheradarmusic.com/audio/Synthetiseur%20(Bestrack%20Nostalgia%20Remix).mp3"
+      response = mock(:parsed_response => {'url' => unescaped_url}, :code => 200)
+      HTTParty.stub!(:get).once.and_return(response)
+      HTTParty.should_receive(:get).with(escaped_url).once
       @track.download!
     end
     
